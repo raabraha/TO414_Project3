@@ -5,9 +5,53 @@ date: "March 25, 2020"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-## Project 3 TO 414 March 25, 2020
+Reading and cleaning data
+```{r}
 
-## This is Lan trying to edit
+insurance <- read.csv("insurance.csv")
+insurance$Customer <- NULL
+insurance$State <- as.factor(insurance$State)
+insurance$Customer.Lifetime.Value <- as.numeric(insurance$Customer.Lifetime.Value)
+insurance$Income <- as.numeric(insurance$Income)
+insurance$Monthly.Premium.Auto <- as.numeric(insurance$Monthly.Premium.Auto)
+insurance$Months.Since.Last.Claim <- as.numeric(insurance$Months.Since.Last.Claim)
+insurance$Number.of.Open.Complaints <- as.numeric(insurance$Number.of.Open.Complaints)
+insurance$Number.of.Policies <- as.numeric(insurance$Number.of.Policies)
+insurance$Total.Claim.Amount <- as.numeric(insurance$Total.Claim.Amount)
+insurance$Months.Since.Policy.Inception <- as.numeric(insurance$Months.Since.Policy.Inception)
+insurance$Effective.To.Date <- NULL
+insurance$Gender <- as.factor(ifelse(insurance$Gender == "M", "Male", "Female"))
+
+
+str(insurance)
+
 ```
+
+
+Exploring Data
+```{r}
+options(scipen=999)
+
+plot(x = insurance$Income, y = insurance$Total.Claim.Amount, xlab = "Income", ylab = "Total Claim Amount")
+
+plot(x = insurance$Policy.Type, y = insurance$Total.Claim.Amount, xlab = "Gender", ylab = "Total Claim Amount")
+
+plot(x = insurance$State, y = insurance$Total.Claim.Amount, xlab = "State", ylab = "Total Claim Amount")
+
+plot(x = insurance$Coverage, y = insurance$Total.Claim.Amount, xlab = "Gender", ylab = "Total Claim Amount")
+
+```
+
+
+Linear Model
+```{r}
+ 
+Mod1 <- lm(Total.Claim.Amount ~., data = insurance)
+
+summary(Mod1)
+
+
+```
+
+
 
